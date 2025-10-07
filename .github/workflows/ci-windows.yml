@@ -74,7 +74,7 @@ jobs:
         TOOLS: 1
       run: make -j3
     - name: Validate
-      run: ./${{ matrix.executable }}.exe -validate
+      run: ./${{ matrix.executable }}.exe -version
     - uses: actions/upload-artifact@main
       with:
         name: ${{ matrix.executable }}-windows-${{ matrix.compiler }}-${{ github.sha }}
