@@ -478,7 +478,7 @@ uint16_t md_rom_sram_device::read(offs_t offset)
 		if (offset >= m_nvram_start/2 && offset <= m_nvram_end/2 && m_nvram_active)
 			return m_nvram[offset - m_nvram_start/2];
 	}
-	if (offset < 0x400000/2)
+	if (offset < 0x800000/2)
 		return m_rom[MD_ADDR(offset)];
 	else
 		return 0xffff;
@@ -518,7 +518,7 @@ uint16_t md_rom_fram_device::read(offs_t offset)
 {
 	if (offset >= m_nvram_start/2 && offset <= m_nvram_end/2 && m_nvram_active)
 		return m_nvram[offset - m_nvram_start/2];
-	if (offset < 0x400000/2)
+	if (offset < 0x800000/2)
 		return m_rom[MD_ADDR(offset)];
 	else
 		return 0xffff;
@@ -551,7 +551,7 @@ uint16_t md_rom_fram_device::read_a13(offs_t offset)
 
 uint16_t md_rom_ssf2_device::read(offs_t offset)
 {
-	if (offset < 0x400000/2)
+	if (offset < 0x800000/2)
 		return m_rom[offset];
 	else
 		return 0xffff;
