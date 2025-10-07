@@ -345,7 +345,7 @@ void md_base_state::megadriv_68k_map(address_map &map)
 {
 	megadriv_68k_base_map(map);
 
-	map(0x000000, 0x7fffff).rom();
+	map(0x000000, 0x7fffff).rom(); // test
 	/*      (0x000000 - 0x3fffff) == GAME ROM (4Meg Max, Some games have special banking too) */
 }
 
