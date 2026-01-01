@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include "machine/timer.h"
 #include "deco104.h"
 #include "deco146.h"
 #include "deco16ic.h"
@@ -107,6 +108,7 @@ private:
 	// we use the pointers below to store a 32-bit copy..
 	required_shared_ptr_array<u32, 4> m_pf_rowscroll32;
 	optional_shared_ptr<u32> m_paletteram;
+	TIMER_DEVICE_CALLBACK_MEMBER(irq_vbl);
 };
 
 class captaven_state : public deco32_state

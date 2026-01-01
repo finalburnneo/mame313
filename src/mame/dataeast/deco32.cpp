@@ -2330,7 +2330,7 @@ void tattass_state::tattass(machine_config &config)
 	ARM(config, m_maincpu, 28000000/4); // unconfirmed
 	m_maincpu->set_addrmap(AS_PROGRAM, &tattass_state::tattass_map);
 	m_maincpu->set_vblank_int("screen", FUNC(deco32_state::irq0_line_assert));
-	MCFG_TIMER_DRIVER_ADD_SCANLINE("scantimer", deco32_state, irq_vbl, "screen", 0, 1)
+	MCFG_TIMER_DRIVER_ADD_SCANLINE("scantimer", deco32_state, irq_vbl, "screen", 0, 1);
 
 	config.set_maximum_quantum(attotime::from_hz(6000));  // to improve main<->audio comms
 
