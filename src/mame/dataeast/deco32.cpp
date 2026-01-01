@@ -2312,12 +2312,25 @@ void dragngun_state::lockload(machine_config &config)
 	m_vol_main->set_volume_callback(FUNC(dragngun_state::volume_main_changed));
 }
 
+static u64 tcycj = 0;
+
+TIMER_DEVICE_CALLBACK_MEMBER(deco32_state::irq_vbl)
+{
+	int scanline = param;
+	if (scanline == 248) {
+		u32 now = (u32)((u64)m_maincpu->total_cycles() - tcycj);
+		printf("cycles since last vbl %d ...\n", now);
+		tcycj = m_maincpu->total_cycles();
+	}
+}
+
 void tattass_state::tattass(machine_config &config)
 {
 	// basic machine hardware
 	ARM(config, m_maincpu, 28000000/4); // unconfirmed
 	m_maincpu->set_addrmap(AS_PROGRAM, &tattass_state::tattass_map);
 	m_maincpu->set_vblank_int("screen", FUNC(deco32_state::irq0_line_assert));
+	MCFG_TIMER_DRIVER_ADD_SCANLINE("scantimer", deco32_state, irq_vbl, "screen", 0, 1)
 
 	config.set_maximum_quantum(attotime::from_hz(6000));  // to improve main<->audio comms
 
