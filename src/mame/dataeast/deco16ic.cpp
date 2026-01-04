@@ -676,8 +676,8 @@ u16 deco16ic_device::pf2_data_r(offs_t offset)
 void deco16ic_device::pf_control_w(offs_t offset, u16 data, u16 mem_mask)
 {
 	// update until current scanline (inclusive if we're in hblank)
-	int ydelta = (screen().hpos() > screen().visible_area().right()) ? 0 : 1;
-	screen().update_partial(screen().vpos() - ydelta);
+//	int ydelta = (screen().hpos() > screen().visible_area().right()) ? 0 : 1;
+//	screen().update_partial(screen().vpos() - ydelta);
 
 	COMBINE_DATA(&m_pf12_control[offset]);
 }
