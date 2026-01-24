@@ -335,6 +335,7 @@ void alpha_8201_device::device_add_mconfig(machine_config &config)
 
 void alpha_8201_device::device_reset()
 {
+	printf("reset alpha8201\n");
 	m_bus = 0;
 	m_mcu->set_input_line(0, CLEAR_LINE);
 }
@@ -350,8 +351,11 @@ void alpha_8201_device::device_reset()
 void alpha_8201_device::mcu_writeram()
 {
 	// RAM WR is level-triggered
-	if (m_bus && (m_mcu_d & 0xc) == 0xc)
+	if (m_bus && (m_mcu_d & 0xc) == 0xc) {
+		printf("mcu_writeram[%x] = %x\n", m_mcu_address, m_mcu_r[0] << 4 | m_mcu_r[1]);
+
 		m_shared_ram[m_mcu_address] = m_mcu_r[0] << 4 | m_mcu_r[1];
+	}
 }
 
 void alpha_8201_device::mcu_update_address()
@@ -405,12 +409,14 @@ void alpha_8201_device::bus_dir_w(int state)
 	// set RAM bus direction to 0: external, 1: MCU side
 	// selects one of two 74LS245 (octal bus transceiver) for databus, address bus via
 	// a couple of 74LS157 (2-input multiplexer)
+	printf("alpha8201 bus dir: %x\n", state);
 	m_bus = state ? 1 : 0;
 	mcu_writeram();
 }
 
 void alpha_8201_device::mcu_start_w(int state)
 {
+	printf("alpha8201 start_w: %x\n", state);
 	// connected to MCU INT0
 	m_mcu->set_input_line(0, state ? ASSERT_LINE : CLEAR_LINE);
 }
