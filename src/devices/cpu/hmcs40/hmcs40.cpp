@@ -272,6 +272,7 @@ void hmcs40_cpu_device::device_start()
 
 void hmcs40_cpu_device::device_reset()
 {
+	printf("hmcs40 device reset\n");
 	m_pc = m_pcmask;
 	m_prev_op = m_op = 0;
 
