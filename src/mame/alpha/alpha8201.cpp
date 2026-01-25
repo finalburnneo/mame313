@@ -372,7 +372,10 @@ u8 alpha_8201_device::mcu_data_r(offs_t offset)
 	if (m_bus && ~m_mcu_d & 4)
 		ret = m_shared_ram[m_mcu_address];
 	else
+	{
+		printf("invalid read, bus %x  mcu_d %x\n", m_bus, m_mcu_d);
 		logerror("%s: MCU side invalid read\n", tag());
+	}
 
 	if (offset == 0)
 		ret >>= 4;
