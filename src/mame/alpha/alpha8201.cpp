@@ -384,6 +384,7 @@ void alpha_8201_device::mcu_data_w(offs_t offset, u8 data)
 	// R0,R1: RAM data
 	// R2,R3: RAM A0-A7
 	m_mcu_r[offset] = data & 0xf;
+	printf("mcu_r[%x]  %x\n", offset, data & 0xf);
 	mcu_update_address();
 }
 
@@ -393,6 +394,7 @@ void alpha_8201_device::mcu_d_w(u16 data)
 	// D2: _RD
 	// D3: WR
 	m_mcu_d = data;
+	printf("mcu_d_w  %x\n", data);
 	mcu_update_address();
 }
 
