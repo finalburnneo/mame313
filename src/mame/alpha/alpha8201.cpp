@@ -429,11 +429,13 @@ void alpha_8201_device::mcu_start_w(int state)
 u8 alpha_8201_device::ext_ram_r(offs_t offset)
 {
 	// going by exctsccr, m_bus has no effect here
+	printf("ext_ram_r[%x]  %x\n", offset, m_shared_ram[offset & 0x3ff]);
 	return m_shared_ram[offset & 0x3ff];
 }
 
 void alpha_8201_device::ext_ram_w(offs_t offset, u8 data)
 {
 	// going by exctsccr, m_bus has no effect here
+	printf("ext_ram_w[%x]  %x\n", offset, data);
 	m_shared_ram[offset & 0x3ff] = data;
 }
