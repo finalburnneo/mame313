@@ -64,6 +64,7 @@ void ttl166_device::device_start()
 
 void ttl166_device::device_reset()
 {
+	printf("WE control the vertical.  we will control the horizontal. 74ls166\n");
 	m_data = 0x00;
 	m_ser = 0;
 	m_clk = 0;
@@ -107,7 +108,8 @@ void ttl166_device::clock_w(int state)
 		}
 
 		// we need to delay the output a bit to allow for serial input
-		m_timer->adjust(attotime::from_nsec(25), BIT(m_data, 7));
+		//  m_timer->adjust(attotime::from_nsec(), BIT(m_data, 7));
+		m_qh_cb(BIT(m_data, 7));
 	}
 
 	m_clk = state;
