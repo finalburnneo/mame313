@@ -72,6 +72,7 @@ protected:
 	u8 m_data;                  // next adpcm data
 	bool m_vck;                 // VCK signal
 	bool m_reset;               // reset pin signal
+	bool m_reset_latch;			// latched on reset 1 -> 0
 	bool m_s1;                  // prescaler selector S1
 	bool m_s2;                  // prescaler selector S2
 	u8 m_bitwidth;              // bit width selector -3B/4B

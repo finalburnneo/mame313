@@ -103,6 +103,7 @@ void msm5205_device::device_start()
 	save_item(NAME(m_data));
 	save_item(NAME(m_vck));
 	save_item(NAME(m_reset));
+	save_item(NAME(m_reset_latch));
 	save_item(NAME(m_s1));
 	save_item(NAME(m_s2));
 	save_item(NAME(m_bitwidth));
@@ -120,6 +121,7 @@ void msm5205_device::device_reset()
 	m_data    = 0;
 	m_vck     = 0;
 	m_reset   = 0;
+	m_reset_latch = 0;
 	m_signal  = 0;
 	m_step    = 0;
 }
@@ -195,11 +197,19 @@ TIMER_CALLBACK_MEMBER(msm5205_device::update_adpcm)
 	{
 		new_signal = 0;
 		m_step = 0;
+		m_reset_latch = 0;
 	}
 	else
 	{
 		/* update signal */
 		/* !! MSM5205 has internal 12bit decoding, signal width is 0 to 8191 !! */
+
+		if (m_reset_latch) {
+			m_reset_latch = 0;
+			new_signal = 0;
+			m_step = 0;
+		}
+
 		val = m_data;
 		new_signal = m_signal + m_diff_lookup[m_step * 16 + (val & 15)];
 
@@ -244,6 +254,7 @@ void msm5205_device::vclk_w(int state)
 
 void msm5205_device::reset_w(int state)
 {
+	if (!m_reset && state) m_reset_latch = true;
 	m_reset = state;
 }
 
