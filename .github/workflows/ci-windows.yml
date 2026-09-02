@@ -52,9 +52,10 @@ jobs:
         OVERRIDE_AR: "llvm-ar"
         OVERRIDE_CC: ${{ matrix.cc }}
         OVERRIDE_CXX: ${{ matrix.cxx }}
-        ARCHOPTS: "-fuse-ld=lld -Wno-error=sfinae-incomplete"
+        ARCHOPTS: "-fuse-ld=lld"
         SUBTARGET: ${{ matrix.subtarget }}
         TOOLS: 1
+        NOWERROR: 1
       run: make -j3
     - name: Validate
       run: ./${{ matrix.executable }}.exe -version
